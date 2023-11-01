@@ -1,5 +1,4 @@
-# Agenda_de_Contatos
+# Agenda_de_Contatos <img align="center" alt="C" width="35px" src="https://cdn.jsdelivr.net/npm/programming-languages-logos/src/c/c.png"/>
 Mini projeto de Estrutura de Dados.
 
 
-<img align="center" alt="#" height="30" width="65" border-radius="" src="https://img.shields.io/badge/C-00599C?style=for-the-badge&logo=c&logoColor=white">
