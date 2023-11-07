@@ -1,12 +1,14 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <conio.h>
+# include <string.h>
 
 
 typedef struct contato {
-    int numero;
     char nome[50];
+    int numero;
     char endereco[50];
+    char email[50];
     struct contato* prox;
     struct contato* ant;
 }contato;
@@ -32,15 +34,19 @@ void adicionar_contato(lista* lista_contatos)
     novo_contato->ant = NULL;
     contato* contato_atual = lista_contatos->inicio;
 
-    printf("Digite o numero: ");
-    scanf_s("%d", &novo_contato->numero);
-
     getchar();
     printf("Digite o nome: ");
     fgets(novo_contato->nome, sizeof(novo_contato->nome), stdin);
 
-    printf("Digite o endereco: ");
+    printf("Digite o numero: ");
+    scanf_s("%d", &novo_contato->numero);
+
+    getchar();
+    printf("Digite o endereco residencial: ");
     fgets(novo_contato->endereco, sizeof(novo_contato->endereco), stdin);
+
+    printf("Digite o email: ");
+    fgets(novo_contato->email, sizeof(novo_contato->email), stdin);
 
     if (lista_contatos->inicio == NULL)
     {
@@ -50,14 +56,14 @@ void adicionar_contato(lista* lista_contatos)
     else
     {
 
-        if (lista_contatos->inicio->numero > novo_contato->numero)
+        if (strcmp(novo_contato->nome, lista_contatos->inicio->nome) < 0)
         {
             novo_contato->prox = lista_contatos->inicio;
             lista_contatos->inicio->ant = novo_contato;
             lista_contatos->inicio = novo_contato;
 
         }
-        else if (lista_contatos->fim->numero < novo_contato->numero)
+        else if (strcmp(novo_contato->nome, lista_contatos->fim->nome) > 0)
         {
             novo_contato->ant = lista_contatos->fim;
             lista_contatos->fim->prox = novo_contato;
@@ -66,7 +72,7 @@ void adicionar_contato(lista* lista_contatos)
 
         else
         {
-            for (; novo_contato->numero > contato_atual->prox->numero && contato_atual->prox != NULL;)
+            for (; strcmp(novo_contato->nome, contato_atual->prox->nome) > 0 && contato_atual->prox != NULL;)
             {
                 contato_atual = contato_atual->prox;
             }
