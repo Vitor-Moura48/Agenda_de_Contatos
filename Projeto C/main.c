@@ -114,20 +114,20 @@ int main()
 
         printf("*Escolha um dos comandos: ");
         scanf_s("%d", &opcoes);
-        system("clear");
+        system("cls");
 
         switch (opcoes)
         {
         case 1: adicionar_contato(lista_contatos);
-            system("clear");
+            system("cls");
             printf("<Contato adicionado>");
             continuar();
-            system("clear");
+            system("cls");
             break;
 
         case 2: imprimir_contatos(lista_contatos);
             continuar();
-            system("clear");
+            system("cls");
             break;
         }
 
