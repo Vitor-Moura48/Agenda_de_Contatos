@@ -1,4 +1,4 @@
-#Função de Remover Contatos
+# Função de Remover Contatos
 
 - Criei a função void removerContato, ela remove pelo nome do contato.
 - Também ignora letras maiúscula e minúsculas.
