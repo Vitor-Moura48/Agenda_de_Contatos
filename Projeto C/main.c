@@ -127,6 +127,31 @@ void achar_contato(lista* lista_contatos) {
 }
 
 
+void removerContato(struct contato agenda[], int numContatos, const char* nome) {
+    int i, j;
+    int encontrado = 0;
+
+    for (i = 0; i < numContatos; i++) {
+        if (strcmp(agenda[i].nome, nome) == 0) {
+            for (j = i; j < numContatos - 1; j++) {
+                strcpy_s(agenda[j].nome, sizeof(agenda[j].nome), agenda[j + 1].nome);
+                strcpy_s(agenda[j].numero, sizeof(agenda[j].numero), agenda[j + 1].numero);
+            }
+            (numContatos)--;
+            encontrado = 1;
+            break;
+        }
+    }
+
+    if (encontrado) {
+        printf("Contato removido com sucesso.\n");
+    }
+    else {
+        printf("Contato não encontrado.\n");
+    }
+}
+
+
 int main()
 {
     lista* lista_contatos = (lista*)malloc(sizeof(lista));
@@ -142,6 +167,7 @@ int main()
         printf("ADICIONAR CONTATO <1>\n");
         printf("IMPRIMIR CONTATO <2>\n");
         printf("PROCURAR CONTATO <3>\n");
+        printf("REMOVER CONTATO <4>\n");
         printf("ENCERRAR <0>\n");
         printf("=============================\n");
 
@@ -164,6 +190,11 @@ int main()
             break;
 
         case 3: achar_contato(lista_contatos);
+            continuar();
+            system("cls");
+            break;
+
+        case 4: removerContato(lista_contatos, 3, "pedro");
             continuar();
             system("cls");
             break;
