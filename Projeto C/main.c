@@ -3,7 +3,6 @@
 # include <conio.h>
 # include <string.h>
 
-
 typedef struct contato {
     char nome[50];
     int numero;
@@ -37,6 +36,7 @@ void adicionar_contato(lista* lista_contatos)
     getchar();
     printf("Digite o nome: ");
     fgets(novo_contato->nome, sizeof(novo_contato->nome), stdin);
+    novo_contato->nome[strcspn(novo_contato->nome, "\n")] = '\0';
 
     printf("Digite o numero: ");
     scanf_s("%d", &novo_contato->numero);
@@ -44,9 +44,11 @@ void adicionar_contato(lista* lista_contatos)
     getchar();
     printf("Digite o endereco residencial: ");
     fgets(novo_contato->endereco, sizeof(novo_contato->endereco), stdin);
+    novo_contato->endereco[strcspn(novo_contato->endereco, "\n")] = '\0';
 
     printf("Digite o email: ");
     fgets(novo_contato->email, sizeof(novo_contato->email), stdin);
+    novo_contato->email[strcspn(novo_contato->email, "\n")] = '\0';
 
     if (lista_contatos->inicio == NULL)
     {
@@ -94,6 +96,36 @@ void imprimir_contatos(lista* lista_contatos)
     }
 }
 
+void achar_contato(lista* lista_contatos) {
+    getchar();
+
+    char busca_nome[50];
+    printf("Digite o nome do contato a ser buscado: ");
+    fgets(busca_nome, sizeof(busca_nome), stdin);
+
+    busca_nome[strcspn(busca_nome, "\n")] = '\0';
+
+    contato* contato_atual = lista_contatos->inicio;
+    int achou = 0;
+
+    while (contato_atual != NULL) {
+        if (strcmp(busca_nome, contato_atual->nome) == 0) {
+            printf("Contato encontrado:\n");
+            printf("Nome: %s\n", contato_atual->nome);
+            printf("Numero: %d\n", contato_atual->numero);
+            printf("Endereço: %s\n", contato_atual->endereco);
+            printf("Email: %s\n", contato_atual->email);
+            achou = 1;
+            break;
+        }
+        contato_atual = contato_atual->prox;
+    }
+
+    if (!achou) {
+        printf("Contato nao encontrado.\n");
+    }
+}
+
 
 int main()
 {
@@ -109,6 +141,7 @@ int main()
         printf("=============================\n");
         printf("ADICIONAR CONTATO <1>\n");
         printf("IMPRIMIR CONTATO <2>\n");
+        printf("PROCURAR CONTATO <3>\n");
         printf("ENCERRAR <0>\n");
         printf("=============================\n");
 
@@ -126,6 +159,11 @@ int main()
             break;
 
         case 2: imprimir_contatos(lista_contatos);
+            continuar();
+            system("cls");
+            break;
+
+        case 3: achar_contato(lista_contatos);
             continuar();
             system("cls");
             break;
