@@ -1,16 +1,6 @@
-# Agenda_de_Contatos <img align="center" alt="C" width="35px" src="https://cdn.jsdelivr.net/npm/programming-languages-logos/src/c/c.png"/>
-- Mini projeto de Estrutura de Dados.
-- Codificar um sistema para gerenciamento de contatos em C.
+# Função de Remover Contatos
 
-# O sistema oferece as seguintes funcionalidades :
-- Adicionar novos contatos;
-- Listar todos os contatos da agenda;
-- Buscar por contato específico;
-- Editar contatos;
-- Remover contatos.
-
-# Cada contato tem as seguintes informações : 
-- Nome.
-- Número de telefone.
-- Endereço.
-- E-mail.
+- Criei a função "void removerContato", ela remove pelo nome do contato.
+- Também ignora letras maiúsculas e minúsculas.
+- Ainda dá pra melhorar, pq eu não sei como que vai ficar com o menu.
+- Se precisar que eu mude o código é só mandar mensagem no wpp que eu vejo
