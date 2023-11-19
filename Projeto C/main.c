@@ -90,10 +90,17 @@ void adicionar_contato(lista* lista_contatos)
 
 void imprimir_contatos(lista* lista_contatos)
 {
+    printf("                    ================================\n");
+    printf("                            LISTA DE CONTATOS\n");
+    printf("                    ================================\n");
+
+    printf("Descricao\n");
+    printf("=================================================================\n\n");
     for (contato* contato_atual = lista_contatos->inicio; contato_atual != NULL; contato_atual = contato_atual->prox)
     {
-        printf("numero->%d \nnome->%s \nendereco->%s  ", contato_atual->numero, contato_atual->nome, contato_atual->endereco);
+        printf("NOME      : %s \nNUMERO    : %d \nEndereco  : %s  \nEmail     : %s\n\n", contato_atual->nome, contato_atual->numero, contato_atual->endereco, contato_atual->email);
     }
+    printf("=================================================================\n");
 }
 
 void achar_contato(lista* lista_contatos) {
