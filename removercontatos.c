@@ -1,33 +1,25 @@
-#include <stdio.h>
-#include <strings.h>
+void removerContato(struct Contato** lista, char nome[]) {
+    struct Contato* atual = *lista;
+    struct Contato* anterior = NULL;
 
-// Estrutura de exemplo pra representar um contato na agenda
-struct Contato {
-    char nome[50];
-    char telefone[15];
-};
-
-// Remove o contato a partir do nome, eu usei a função "strcasecmp" que ignora maiúsculas e minúsculas na hora de verificar
-void removerContato(struct Contato agenda[], int *numContatos, const char *nome) {
-    int i, j;
-    int encontrado = 0;
-
-    for (i = 0; i < *numContatos; i++) {
-        if (strcasecmp(agenda[i].nome, nome) == 0) {
-            for (j = i; j < *numContatos - 1; j++) {
-                strcpy(agenda[j].nome, agenda[j + 1].nome);
-                strcpy(agenda[j].telefone, agenda[j + 1].telefone);
-            }
-            (*numContatos)--;
-            encontrado = 1;
-            break;
-        }
+    while (atual != NULL && strcasecmp(atual->nome, nome) != 0) {
+        anterior = atual;
+        atual = atual->proximo;
     }
 
-    // Mensagem para saber se o contato foi encontrado ou não
-    if (encontrado) {
-        printf("Contato removido com sucesso.\n");
+    if (atual == NULL) {
+        printf("Contato com o nome %s nao encontrado.\n", nome);
+        return;
+    }
+
+    if (anterior == NULL) {
+        *lista = atual->proximo;
     } else {
-        printf("Contato não encontrado.\n");
+        anterior->proximo = atual->proximo;
     }
+
+    // Libera a memória do nó removido
+    free(atual);
+
+    printf("Contato com o nome %s removido com sucesso.\n", nome);
 }
