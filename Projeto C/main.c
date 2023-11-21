@@ -134,28 +134,31 @@ void achar_contato(lista* lista_contatos) {
 }
 
 
-void removerContato(struct contato agenda[], int numContatos, const char* nome) {
-    int i, j;
-    int encontrado = 0;
+void removerContato(struct contato** lista, char nome[]) {
+    struct contato* atual = *lista;
+    struct contato* anterior = NULL;
 
-    for (i = 0; i < numContatos; i++) {
-        if (strcmp(agenda[i].nome, nome) == 0) {
-            for (j = i; j < numContatos - 1; j++) {
-                strcpy_s(agenda[j].nome, sizeof(agenda[j].nome), agenda[j + 1].nome);
-                strcpy_s(agenda[j].numero, sizeof(agenda[j].numero), agenda[j + 1].numero);
-            }
-            (numContatos)--;
-            encontrado = 1;
-            break;
-        }
+    while (atual != NULL && strcasecmp(atual->nome, nome) != 0) {
+        anterior = atual;
+        atual = atual->proximo;
     }
 
-    if (encontrado) {
-        printf("Contato removido com sucesso.\n");
+    if (atual == NULL) {
+        printf("Contato com o nome %s nao encontrado.\n", nome);
+        return;
+    }
+
+    if (anterior == NULL) {
+        *lista = atual->proximo;
     }
     else {
-        printf("Contato não encontrado.\n");
+        anterior->proximo = atual->proximo;
     }
+
+    // Libera a memória do nó removido
+    free(atual);
+
+    printf("Contato com o nome %s removido com sucesso.\n", nome);
 }
 
 
