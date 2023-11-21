@@ -117,7 +117,7 @@ void achar_contato(lista* lista_contatos) {
 
     while (contato_atual != NULL) {
         if (strcmp(busca_nome, contato_atual->nome) == 0) {
-            printf("Contato encontrado:\n");
+            printf("\nContato encontrado:\n");
             printf("Nome: %s\n", contato_atual->nome);
             printf("Numero: %d\n", contato_atual->numero);
             printf("Endereço: %s\n", contato_atual->endereco);
@@ -129,7 +129,7 @@ void achar_contato(lista* lista_contatos) {
     }
 
     if (!achou) {
-        printf("Contato nao encontrado.\n");
+        printf("\nContato nao encontrado.\n");
     }
 }
 
