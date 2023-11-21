@@ -1,53 +1,85 @@
 #include <stdio.h>
-#include <strings.h>
+#include <stdlib.h>
+#include <string.h>
 
+// Definição da estrutura do contato
 struct Contato {
     char nome[50];
     char telefone[15];
+    struct Contato* proximo;
 };
 
-void removerContato(struct Contato agenda[], int *numContatos, const char *nome) {
-    int i, j;
-    int encontrado = 0;
+// Função principal
+void removerContato(struct Contato** lista, char nome[]) {
+    struct Contato* atual = *lista;
+    struct Contato* anterior = NULL;
 
-    for (i = 0; i < *numContatos; i++) {
-        if (strcasecmp(agenda[i].nome, nome) == 0) {
-            for (j = i; j < *numContatos - 1; j++) {
-                strcpy(agenda[j].nome, agenda[j + 1].nome);
-                strcpy(agenda[j].telefone, agenda[j + 1].telefone);
-            }
-            (*numContatos)--;
-            encontrado = 1;
-            break;
-        }
+    while (atual != NULL && strcasecmp(atual->nome, nome) != 0) {
+        anterior = atual;
+        atual = atual->proximo;
     }
 
-    if (encontrado) {
-        printf("Contato removido com sucesso.\n");
+    if (atual == NULL) {
+        printf("Contato com o nome %s nao encontrado.\n", nome);
+        return;
+    }
+
+    if (anterior == NULL) {
+        *lista = atual->proximo;
     } else {
-        printf("Contato não encontrado.\n");
+        anterior->proximo = atual->proximo;
+    }
+
+    // Libera a memória do nó removido
+    free(atual);
+
+    printf("Contato com o nome %s removido com sucesso.\n", nome);
+}
+
+// Função de teste pra imprimir lista de contatos
+void imprimirLista(struct Contato* lista) {
+    while (lista != NULL) {
+        printf("Nome: %s, Telefone: %s\n", lista->nome, lista->telefone);
+        lista = lista->proximo;
     }
 }
 
-
-// Exemplo para usar a função, infelizmente eu não sei como vai ficar com o menu
-int main() {
-    struct Contato agenda[100];
-    int numContatos = 3;
-
-    strcpy(agenda[0].nome, "Joao");
-    strcpy(agenda[0].telefone, "123456789");
-    strcpy(agenda[1].nome, "Maria");
-    strcpy(agenda[1].telefone, "987654321");
-    strcpy(agenda[2].nome, "Carlos");
-    strcpy(agenda[2].telefone, "555555555");
-
-    removerContato(agenda, &numContatos, "maria");
-
-    printf("Agenda após a remoção:\n");
-    for (int i = 0; i < numContatos; i++) {
-        printf("Nome: %s, Telefone: %s\n", agenda[i].nome, agenda[i].telefone);
+// Função pra liberar a memória alocada na lista
+void liberarLista(struct Contato* lista) {
+    while (lista != NULL) {
+        struct Contato* temp = lista;
+        lista = lista->proximo;
+        free(temp);
     }
+}
+
+// Main pra testar a remoção de contatos
+int main() {
+    struct Contato* lista = NULL;
+
+    // Adiciona alguns contatos à lista (apenas para exemplo)
+    struct Contato* contato1 = (struct Contato*)malloc(sizeof(struct Contato));
+    strcpy(contato1->nome, "Joao");
+    strcpy(contato1->telefone, "123456789");
+    contato1->proximo = NULL;
+
+    struct Contato* contato2 = (struct Contato*)malloc(sizeof(struct Contato));
+    strcpy(contato2->nome, "Maria");
+    strcpy(contato2->telefone, "987654321");
+    contato2->proximo = NULL;
+
+    contato1->proximo = contato2;
+    lista = contato1;
+
+    printf("Lista antes da remocao:\n");
+    imprimirLista(lista);
+
+    removerContato(&lista, "Joao");
+
+    printf("\nLista apos a remocao:\n");
+    imprimirLista(lista);
+
+    liberarLista(lista);
 
     return 0;
 }
