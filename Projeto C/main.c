@@ -120,7 +120,7 @@ void achar_contato(lista* lista_contatos) {
             printf("\nContato encontrado:\n");
             printf("Nome: %s\n", contato_atual->nome);
             printf("Numero: %d\n", contato_atual->numero);
-            printf("Endereço: %s\n", contato_atual->endereco);
+            printf("EndereÃ§o: %s\n", contato_atual->endereco);
             printf("Email: %s\n", contato_atual->email);
             achou = 1;
             break;
@@ -134,13 +134,13 @@ void achar_contato(lista* lista_contatos) {
 }
 
 
-void removerContato(struct contato** lista, char nome[]) {
-    struct contato* atual = *lista;
-    struct contato* anterior = NULL;
+void removerContato(lista* lista_contatos, char nome[]) {
+    contato* atual = lista_contatos->inicio;
+    contato* anterior = NULL;
 
     while (atual != NULL && strcasecmp(atual->nome, nome) != 0) {
         anterior = atual;
-        atual = atual->proximo;
+        atual = atual->prox;
     }
 
     if (atual == NULL) {
@@ -149,13 +149,21 @@ void removerContato(struct contato** lista, char nome[]) {
     }
 
     if (anterior == NULL) {
-        *lista = atual->proximo;
-    }
-    else {
-        anterior->proximo = atual->proximo;
+        lista_contatos->inicio = atual->prox;
+        if (lista_contatos->inicio != NULL) {
+            lista_contatos->inicio->ant = NULL;
+        } else {
+            lista_contatos->fim = NULL;
+        }
+    } else {
+        anterior->prox = atual->prox;
+        if (atual->prox != NULL) {
+            atual->prox->ant = anterior;
+        } else {
+            lista_contatos->fim = anterior;
+        }
     }
 
-    // Libera a memória do nó removido
     free(atual);
 
     printf("Contato com o nome %s removido com sucesso.\n", nome);
@@ -169,7 +177,7 @@ int main()
 
     int opcoes = 1;
 
-    printf("§§§§ Bem Vindo ao Sistema de Agenda de Contatos §§§§\n\n");
+    printf("Â§Â§Â§Â§ Bem Vindo ao Sistema de Agenda de Contatos Â§Â§Â§Â§\n\n");
     do
     {
         printf("       MENU PRINCIPAL\n");
@@ -204,11 +212,11 @@ int main()
             system("cls");
             break;
 
-        case 4: removerContato(lista_contatos, 3, "pedro");
+        case 4: removerContato(lista_contatos, "pedro");
             continuar();
             system("cls");
             break;
-        }
+    }
 
     } while (opcoes != 0);
 
