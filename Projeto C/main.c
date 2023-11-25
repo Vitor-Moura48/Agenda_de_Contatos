@@ -117,11 +117,11 @@ void achar_contato(lista* lista_contatos) {
 
     while (contato_atual != NULL) {
         if (strcmp(busca_nome, contato_atual->nome) == 0) {
-            printf("\nContato encontrado:\n");
+            printf("\nContato encontrado:\n\n");
             printf("Nome: %s\n", contato_atual->nome);
             printf("Numero: %d\n", contato_atual->numero);
             printf("Endereço: %s\n", contato_atual->endereco);
-            printf("Email: %s\n", contato_atual->email);
+            printf("Email: %s", contato_atual->email);
             achou = 1;
             break;
         }
@@ -129,7 +129,7 @@ void achar_contato(lista* lista_contatos) {
     }
 
     if (!achou) {
-        printf("\nContato nao encontrado.\n");
+        printf("\nContato nao encontrado.");
     }
 }
 
@@ -138,7 +138,7 @@ void removerContato(lista* lista_contatos, char nome[]) {
     contato* atual = lista_contatos->inicio;
     contato* anterior = NULL;
 
-    while (atual != NULL && strcasecmp(atual->nome, nome) != 0) {
+    while (atual != NULL && strcmp(atual->nome, nome) != 0) {
         anterior = atual;
         atual = atual->prox;
     }
