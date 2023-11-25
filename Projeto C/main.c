@@ -17,15 +17,6 @@ typedef struct lista_contatos {
     contato* fim;
 }lista;
 
-
-void continuar()
-{
-    printf("\n\ncontinuar <espaco>");
-    while (getchar() == '\n');
-
-}
-
-
 void adicionar_contato(lista* lista_contatos)
 {
     contato* novo_contato = (contato*)malloc(sizeof(contato));
@@ -97,10 +88,11 @@ void imprimir_contatos(lista* lista_contatos)
     printf("Descricao\n");
     printf("=================================================================\n\n");
     for (contato* contato_atual = lista_contatos->inicio; contato_atual != NULL; contato_atual = contato_atual->prox)
-    {
+    {   
         printf("NOME      : %s \nNUMERO    : %d \nEndereco  : %s  \nEmail     : %s\n\n", contato_atual->nome, contato_atual->numero, contato_atual->endereco, contato_atual->email);
+        printf("=================================================================\n");
     }
-    printf("=================================================================\n");
+    
 }
 
 void achar_contato(lista* lista_contatos) {
@@ -121,7 +113,7 @@ void achar_contato(lista* lista_contatos) {
             printf("Nome: %s\n", contato_atual->nome);
             printf("Numero: %d\n", contato_atual->numero);
             printf("Endereço: %s\n", contato_atual->endereco);
-            printf("Email: %s", contato_atual->email);
+            printf("Email: %s\n", contato_atual->email);
             achou = 1;
             break;
         }
@@ -129,7 +121,7 @@ void achar_contato(lista* lista_contatos) {
     }
 
     if (!achou) {
-        printf("\nContato nao encontrado.");
+        printf("\nContato nao encontrado.\n");
     }
 }
 
@@ -177,17 +169,19 @@ int main()
 
     int opcoes = 1;
 
-    printf("§§§§ Bem Vindo ao Sistema de Agenda de Contatos §§§§\n\n");
+   
     do
-    {
-        printf("       MENU PRINCIPAL\n");
-        printf("=============================\n");
-        printf("ADICIONAR CONTATO <1>\n");
-        printf("IMPRIMIR CONTATO <2>\n");
-        printf("PROCURAR CONTATO <3>\n");
-        printf("REMOVER CONTATO <4>\n");
-        printf("ENCERRAR <0>\n");
-        printf("=============================\n");
+    {   
+        system("cls");
+        printf("§§§§ Bem Vindo ao Sistema de Agenda de Contatos §§§§\n\n");
+        printf("     MENU PRINCIPAL\n");
+        printf("======================\n");
+        printf("[1] ADICIONAR CONTATO\n");
+        printf("[2] IMPRIMIR CONTATO\n");
+        printf("[3] PROCURAR CONTATO\n");
+        printf("[4] REMOVER CONTATO\n");
+        printf("[0] ENCERRAR\n");
+        printf("=====================\n");
 
         printf("*Escolha um dos comandos: ");
         scanf_s("%d", &opcoes);
@@ -195,26 +189,29 @@ int main()
 
         switch (opcoes)
         {
-        case 1: adicionar_contato(lista_contatos);
+        case 1: 
             system("cls");
-            printf("<Contato adicionado>");
-            continuar();
-            system("cls");
+            adicionar_contato(lista_contatos);
+            printf("*Contato adicionado*\n");
+            system("pause");
             break;
 
-        case 2: imprimir_contatos(lista_contatos);
-            continuar();
+        case 2: 
             system("cls");
+            imprimir_contatos(lista_contatos);
+            system("pause");
             break;
 
-        case 3: achar_contato(lista_contatos);
-            continuar();
+        case 3: 
             system("cls");
+            achar_contato(lista_contatos);
+            system("pause");
             break;
 
-        case 4: removerContato(lista_contatos, "pedro");
-            continuar();
+        case 4: 
             system("cls");
+            removerContato(lista_contatos, "pedro");;
+            system("pause");
             break;
     }
 
