@@ -2,6 +2,7 @@
 # include <stdlib.h>
 # include <conio.h>
 # include <string.h>
+# include <windows.h>
 
 typedef struct contato {
     char nome[50];
@@ -121,7 +122,10 @@ void achar_contato(lista* lista_contatos) {
     }
 
     if (!achou) {
+        HANDLE informacoes_console = GetStdHandle(STD_OUTPUT_HANDLE);
+        SetConsoleTextAttribute(informacoes_console, FOREGROUND_RED | FOREGROUND_INTENSITY);
         printf("\nContato nao encontrado.\n");
+        SetConsoleTextAttribute(informacoes_console, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
     }
 }
 
@@ -142,7 +146,10 @@ void removerContato(lista* lista_contatos) {
     }
 
     if (atual == NULL) {
+        HANDLE informacoes_console = GetStdHandle(STD_OUTPUT_HANDLE);
+        SetConsoleTextAttribute(informacoes_console, FOREGROUND_RED | FOREGROUND_INTENSITY);
         printf("Contato com o nome %s nao encontrado.\n", busca_nome);
+        SetConsoleTextAttribute(informacoes_console, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
         return;
     }
 
@@ -169,6 +176,9 @@ void removerContato(lista* lista_contatos) {
 
 int main()
 {
+    HANDLE informacoes_console = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(informacoes_console, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+
     lista* lista_contatos = (lista*)malloc(sizeof(lista));
     lista_contatos->inicio = NULL;
 
