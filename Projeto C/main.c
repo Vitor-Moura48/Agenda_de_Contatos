@@ -125,18 +125,24 @@ void achar_contato(lista* lista_contatos) {
     }
 }
 
+void removerContato(lista* lista_contatos) {
+    getchar();
 
-void removerContato(lista* lista_contatos, char nome[]) {
+    char busca_nome[50];
+    printf("Digite o nome do contato a ser removido: ");
+    fgets(busca_nome, sizeof(busca_nome), stdin);
+    busca_nome[strcspn(busca_nome, "\n")] = '\0';
+
     contato* atual = lista_contatos->inicio;
     contato* anterior = NULL;
 
-    while (atual != NULL && strcmp(atual->nome, nome) != 0) {
+    while (atual != NULL && strcmp(atual->nome, busca_nome) != 0) {
         anterior = atual;
         atual = atual->prox;
     }
 
     if (atual == NULL) {
-        printf("Contato com o nome %s nao encontrado.\n", nome);
+        printf("Contato com o nome %s nao encontrado.\n", busca_nome);
         return;
     }
 
@@ -158,9 +164,8 @@ void removerContato(lista* lista_contatos, char nome[]) {
 
     free(atual);
 
-    printf("Contato com o nome %s removido com sucesso.\n", nome);
+    printf("Contato com o nome %s removido com sucesso.\n", busca_nome);
 }
-
 
 int main()
 {
