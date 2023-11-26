@@ -1,3 +1,14 @@
+contato* achar_contato(lista* lista_contatos, const char* busca_nome) {
+    contato* contato_atual = lista_contatos->inicio;
+    while (contato_atual != NULL) {
+        if (strcmp(busca_nome, contato_atual->nome) == 0) {
+            return contato_atual; // Contato encontrado
+        }
+        contato_atual = contato_atual->prox;
+    }
+    return NULL; // Contato não encontrado
+}
+
 void editar_contato(lista* lista_contatos) {
     getchar(); //limpar caractere
     char busca_nome[50];
