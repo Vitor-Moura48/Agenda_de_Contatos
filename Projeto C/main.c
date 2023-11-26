@@ -188,17 +188,17 @@ int main()
     do
     {   
         system("cls");
-        printf("§§§§ Bem Vindo ao Sistema de Agenda de Contatos §§§§\n\n");
-        printf("     MENU PRINCIPAL\n");
-        printf("======================\n");
-        printf("[1] ADICIONAR CONTATO\n");
-        printf("[2] IMPRIMIR CONTATO\n");
-        printf("[3] PROCURAR CONTATO\n");
-        printf("[4] REMOVER CONTATO\n");
-        printf("[0] ENCERRAR\n");
-        printf("=====================\n");
+        printf("                              §§§§ Bem Vindo ao Sistema de Agenda de Contatos §§§§\n\n");
+        printf("                                                     MENU PRINCIPAL\n");
+        printf("                                             ===========================\n");
+        printf("                                             [1]    ADICIONAR CONTATO \n");
+        printf("                                             [2]    IMPRIMIR CONTATO  \n");
+        printf("                                             [3]    PROCURAR CONTATO  \n");
+        printf("                                             [4]    REMOVER CONTATO   \n");
+        printf("                                             [0]    ENCERRAR SISTEMA  \n");
+        printf("                                             ===========================\n");
 
-        printf("*Escolha um dos comandos: ");
+        printf("\n                                             *Escolha um dos comandos: ");
         scanf_s("%d", &opcoes);
         system("cls");
 
