@@ -200,7 +200,7 @@ void editar_contato(lista* lista_contatos) {
         contato_encontrado->nome[strcspn(contato_encontrado->nome, "\n")] = '\0';
 
         printf("Novo Numero: ");
-        scanf("%d", &contato_encontrado->numero);
+        scanf_s("%d", &contato_encontrado->numero);
 
         getchar(); // limpar caractere
 
@@ -270,13 +270,13 @@ int main()
 
         case 4: 
             system("cls");
-            removerContato(lista_contatos, "pedro");;
+            removerContato(lista_contatos, "pedro");
             system("pause");
             break;
         case 5:
             system("cls");
-            editar_contato(lista_contatos)
-            system("pause")
+            editar_contato(lista_contatos);
+            system("pause");
             break;
     }
 
