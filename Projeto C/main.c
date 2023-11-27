@@ -89,11 +89,11 @@ void imprimir_contatos(lista* lista_contatos)
     printf("Descricao\n");
     printf("=================================================================\n\n");
     for (contato* contato_atual = lista_contatos->inicio; contato_atual != NULL; contato_atual = contato_atual->prox)
-    {   
+    {
         printf("NOME      : %s \nNUMERO    : %d \nEndereco  : %s  \nEmail     : %s\n\n", contato_atual->nome, contato_atual->numero, contato_atual->endereco, contato_atual->email);
         printf("=================================================================\n");
     }
-    
+
 }
 
 void achar_contato(lista* lista_contatos) {
@@ -157,14 +157,17 @@ void removerContato(lista* lista_contatos) {
         lista_contatos->inicio = atual->prox;
         if (lista_contatos->inicio != NULL) {
             lista_contatos->inicio->ant = NULL;
-        } else {
+        }
+        else {
             lista_contatos->fim = NULL;
         }
-    } else {
+    }
+    else {
         anterior->prox = atual->prox;
         if (atual->prox != NULL) {
             atual->prox->ant = anterior;
-        } else {
+        }
+        else {
             lista_contatos->fim = anterior;
         }
     }
@@ -213,9 +216,54 @@ void editar_contato(lista* lista_contatos) {
         contato_encontrado->email[strcspn(contato_encontrado->email, "\n")] = '\0';
 
         printf("Contato editado com sucesso.\n");
-    } else {
+    }
+    else {
         printf("Contato nao encontrado.\n");
     }
+}
+
+void salvar_contatos(lista* lista_contatos, const char* nome_arquivo) {
+    FILE* arquivo;
+    if (fopen_s(&arquivo, nome_arquivo, "wb") != 0) {
+        perror("Erro ao abrir o arquivo para escrita");
+        return;
+    }
+
+    contato* contato_atual = lista_contatos->inicio;
+    while (contato_atual != NULL) {
+        fwrite(contato_atual, sizeof(contato), 1, arquivo);
+        contato_atual = contato_atual->prox;
+    }
+
+    fclose(arquivo);
+}
+
+void carregar_contatos(lista* lista_contatos, const char* nome_arquivo) {
+    FILE* arquivo;
+    if (fopen_s(&arquivo, nome_arquivo, "rb") != 0) {
+        perror("Erro ao abrir o arquivo para leitura");
+        return;
+    }
+
+    contato novo_contato;
+    while (fread(&novo_contato, sizeof(contato), 1, arquivo) == 1) {
+        contato* novo = (contato*)malloc(sizeof(contato));
+        *novo = novo_contato;
+        novo->prox = NULL;
+        novo->ant = NULL;
+
+        if (lista_contatos->inicio == NULL) {
+            lista_contatos->inicio = novo;
+            lista_contatos->fim = novo;
+        }
+        else {
+            lista_contatos->fim->prox = novo;
+            novo->ant = lista_contatos->fim;
+            lista_contatos->fim = novo;
+        }
+    }
+
+    fclose(arquivo);
 }
 
 int main()
@@ -228,9 +276,12 @@ int main()
 
     int opcoes = 1;
 
-   
+    const char* nome_arquivo = "contatos.dat";
+
+    carregar_contatos(lista_contatos, nome_arquivo);
+
     do
-    {   
+    {
         system("cls");
         printf("                              §§§§ Bem Vindo ao Sistema de Agenda de Contatos §§§§\n\n");
         printf("                                                     MENU PRINCIPAL\n");
@@ -249,28 +300,28 @@ int main()
 
         switch (opcoes)
         {
-        case 1: 
+        case 1:
             system("cls");
             adicionar_contato(lista_contatos);
             printf("*Contato adicionado*\n");
             system("pause");
             break;
 
-        case 2: 
+        case 2:
             system("cls");
             imprimir_contatos(lista_contatos);
             system("pause");
             break;
 
-        case 3: 
+        case 3:
             system("cls");
             achar_contato(lista_contatos);
             system("pause");
             break;
 
-        case 4: 
+        case 4:
             system("cls");
-            removerContato(lista_contatos, "pedro");
+            removerContato(lista_contatos);
             system("pause");
             break;
         case 5:
@@ -278,7 +329,9 @@ int main()
             editar_contato(lista_contatos);
             system("pause");
             break;
-    }
+        }
+
+        salvar_contatos(lista_contatos, nome_arquivo);
 
     } while (opcoes != 0);
 
